@@ -47,7 +47,9 @@ stages:
         targetFolder: 'webService01'
 
 - stage: Deploy
-  displayName: Deploy
+  displayName: Deploy WebService
+  dependsOn: Build
+  condition: succeeded()
   jobs:
   - deployment: DeployWebService
     pool:
