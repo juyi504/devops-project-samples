@@ -18,14 +18,11 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+  
     - task: Docker@2
       inputs:
         containerRegistry: 'docker_AzureDevOps'
-        command: 'login'
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'docker_AzureDevOps'
-        repository: 'azure_project'
+        repository: 'juyi504/azure_project'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/dotnet/aspnetcore/container/Application/aspnet-core-dotnet-core/Dockerfile'
         tags: 'beta1.1'
