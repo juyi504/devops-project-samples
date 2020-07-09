@@ -8,6 +8,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   imageName: 'asp-web'
+  environmentName: 'WebServiceENV'
 
 stages:
 - stage: Build
