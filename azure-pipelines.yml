@@ -49,17 +49,20 @@ stages:
   displayName: Deploy
   jobs:
   - deployment: DeployWebService
-    steps:
-    - task: CodeDeployDeployApplication@1
-      displayName: AWS CodeDeploy Deployment
-      inputs:
-        awsCredentials: 'aws_AzureDevOps'
-        regionName: 'us-west-1'
-        applicationName: 'webService01'
-        deploymentGroupName: 'webService01'
-        deploymentRevisionSource: 's3'
-        bucketName: 'azure-dev-ops-ci-504'
-    
+    strategy:
+      runOnce:
+        deploy:      
+          steps:
+            - task: CodeDeployDeployApplication@1
+              displayName: AWS CodeDeploy Deployment
+              inputs:
+                awsCredentials: 'aws_AzureDevOps'
+                regionName: 'us-west-1'
+                applicationName: 'webService01'
+                deploymentGroupName: 'webService01'
+                deploymentRevisionSource: 's3'
+                bucketName: 'azure-dev-ops-ci-504'
+            
     
 
 
