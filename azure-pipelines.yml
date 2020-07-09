@@ -49,6 +49,9 @@ stages:
   displayName: Deploy
   jobs:
   - deployment: DeployWebService
+    pool:
+       vmImage: 'ubuntu-latest'
+       
     strategy:
       runOnce:
         deploy:      
@@ -62,6 +65,8 @@ stages:
                 deploymentGroupName: 'webService01'
                 deploymentRevisionSource: 's3'
                 bucketName: 'azure-dev-ops-ci-504'
+
+
             
     
 
