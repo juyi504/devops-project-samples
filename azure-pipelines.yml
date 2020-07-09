@@ -19,9 +19,8 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      displayName: Build Docker Image and Push to Docker Hub
       inputs:
-        containerRegistry: 'docker-asp-web-service'
+        containerRegistry: 'docker_AzureDevOps'
         repository: 'azure_project'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/dotnet/aspnetcore/container/Application/aspnet-core-dotnet-core/Dockerfile'
