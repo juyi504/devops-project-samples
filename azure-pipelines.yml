@@ -11,10 +11,10 @@ variables:
   environmentName: 'WebServiceENV'
 
 stages:
-- stage: Build
-  displayName: Build
+- stage: Build Docker Image and Push to Docker Hub
+  displayName: Build Docker Image
   jobs:  
-  - job: Build
+  - job: Build Docker Image
     displayName: Build 
     pool:
       vmImage: 'ubuntu-latest'
@@ -28,6 +28,16 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/dotnet/aspnetcore/container/Application/aspnet-core-dotnet-core/Dockerfile'
         tags: '$(Build.BuildId)'
+
+stages:
+- stage: archive HTML file
+  displayName: Build
+  jobs:  
+  - job: Archive Build
+    displayName: Archive Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
     - task: ArchiveFiles@2
       displayName: Compress file
       inputs:
