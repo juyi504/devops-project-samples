@@ -1,0 +1,12 @@
+version: 0.0
+os: linux 
+files:
+  - source: webapp/Application
+    destination: apache-tomcat-9.0.30/webapps/ROOT
+  - source: apache-tomcat-9.0.30
+    destination: /home/ec2-user
+hooks:
+  BeforeInstall:
+    - location: /home/ec2-user/apache-tomcat-9.0.30/bin/startup.sh
+      timeout: 300
+
