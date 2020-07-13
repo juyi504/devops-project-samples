@@ -19,7 +19,16 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-  
+    - task: Bash@3
+      displayName: Access Secret
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Build Start Get Secret Environment Variable"
+          echo $(secret_pwd)
+          echo $MY_Secret_PWD
+      env:
+        MY_Secret_PWD: $(secret_pwd)  
     - task: Docker@2
       displayName: Build Docker Image
       inputs:
@@ -45,6 +54,15 @@ stages:
         archiveType: 'tar'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
         replaceExistingArchive: true
+
+- stage: publish_artifact
+  displayName: Publish Artifact
+  jobs:  
+  - job: publish_artifact
+    displayName: Publish Artifact
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
     - task: S3Upload@1
       displayName: Publish archive file to s3 bucket
       inputs:
@@ -54,17 +72,15 @@ stages:
         sourceFolder: '$(Build.ArtifactStagingDirectory)'
         globExpressions: '**'
         targetFolder: 'webService01'
-    
-    - task: Bash@3
-      displayName: Access Secret
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish build artifact
       inputs:
-        targetType: 'inline'
-        script: |
-          echo "Build Start Get Secret Environment Variable"
-          echo $(secret_pwd)
-          echo $MY_Secret_PWD
-      env:
-        MY_Secret_PWD: $(secret_pwd)
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
+        ArtifactName: 'buildArtifact'
+        publishLocation: 'Container'
+    
+
     
     
 
