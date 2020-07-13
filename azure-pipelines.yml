@@ -55,6 +55,17 @@ stages:
         sourceFolder: '$(Build.ArtifactStagingDirectory)'
         globExpressions: '**'
         targetFolder: 'webService01'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Build Start Get Environment Variable"
+          echo $(secret_pwd)
+          echo $MY_Secret_PWD
+      env:
+        MY_Secret_PWD: $(secret_pwd)
+    
 
 - stage: Deploy
   displayName: Deploy WebService
