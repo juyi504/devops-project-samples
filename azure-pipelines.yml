@@ -44,7 +44,7 @@ stages:
         rootFolderOrFile: '$(Build.SourcesDirectory)/html'
         includeRootFolder: true
         archiveType: 'tar'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar.gz'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
         replaceExistingArchive: true
     - task: S3Upload@1
       displayName: Publish archive file to s3 bucket
@@ -77,7 +77,7 @@ stages:
                 deploymentGroupName: 'webService01'
                 deploymentRevisionSource: 's3'
                 bucketName: 'azure-dev-ops-ci-504'
-                bundleKey: 'webService01/$(Build.BuildId).tar.gz'
+                bundleKey: 'webService01/$(Build.BuildId).tar'
 
 
             
