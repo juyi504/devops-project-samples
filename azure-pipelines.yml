@@ -57,10 +57,11 @@ stages:
         targetFolder: 'webService01'
     
     - task: Bash@3
+      displayName: Access Secret
       inputs:
         targetType: 'inline'
         script: |
-          echo "Build Start Get Environment Variable"
+          echo "Build Start Get Secret Environment Variable"
           echo $(secret_pwd)
           echo $MY_Secret_PWD
       env:
