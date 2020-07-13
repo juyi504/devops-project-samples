@@ -14,8 +14,8 @@ stages:
 - stage: Build Docker Image and Push to Docker Hub
   displayName: Build Docker Image
   jobs:  
-  - job: Build Docker Image
-    displayName: Build 
+  - job: Build-Docker-Image
+    displayName: Build Docker Image
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -33,7 +33,7 @@ stages:
 - stage: archive HTML file
   displayName: Build
   jobs:  
-  - job: Archive Build
+  - job: Archive-Build
     displayName: Archive Build
     pool:
       vmImage: 'ubuntu-latest'
