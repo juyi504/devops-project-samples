@@ -11,7 +11,7 @@ variables:
   environmentName: 'WebServiceENV'
 
 stages:
-- stage: Build Docker Image and Push to Docker Hub
+- stage: Build_Docker_Image_Push_to_Docker_Hub
   displayName: Build Docker Image
   jobs:  
   - job: Build_Docker_Image
@@ -30,7 +30,7 @@ stages:
         tags: '$(Build.BuildId)'
 
 
-- stage: archive HTML file
+- stage: archive_HTML_file
   displayName: Build
   jobs:  
   - job: Archive_Build
@@ -58,7 +58,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy WebService
-  dependsOn: Build
+  dependsOn: Build_Docker_Image_Push_to_Docker_Hub
   condition: succeeded()
   jobs:
   - deployment: DeployWebService
