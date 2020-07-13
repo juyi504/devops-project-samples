@@ -55,11 +55,11 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
         replaceExistingArchive: true
 
-- stage: publish_artifact
-  displayName: Publish Artifact
+- stage: publish_to_s3
+  displayName: Publish artifact to AWS S3
   jobs:  
-  - job: publish_artifact
-    displayName: Publish Artifact
+  - job: publish_to_aws_s3
+    displayName: Publish artifact to AWS S3
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -73,6 +73,15 @@ stages:
         globExpressions: '**'
         targetFolder: 'webService01'
 
+
+- stage: publish_artifact
+  displayName: Publish Artifact
+  jobs:  
+  - job: publish_artifact
+    displayName: Publish Artifact
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
     - task: PublishBuildArtifacts@1
       displayName: Publish build artifact
       inputs:
@@ -85,8 +94,8 @@ stages:
     
 
 - stage: Deploy
-  displayName: Deploy WebService
-  dependsOn: archive_file
+  displayName: Deploy WebService TO AWS
+  dependsOn: publish_to_s3
   condition: succeeded()
   jobs:
   - deployment: DeployWebService
