@@ -64,7 +64,7 @@ stages:
   - deployment: DeployWebService
     pool:
        vmImage: 'ubuntu-latest'
-    environment: ${environmentName}
+    environment: $(environmentName)
     strategy:
       runOnce:
         deploy:      
