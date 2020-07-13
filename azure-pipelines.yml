@@ -39,10 +39,9 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: ArchiveFiles@2
-      displayName: Compress file
       inputs:
         rootFolderOrFile: '$(Build.SourcesDirectory)/html'
-        includeRootFolder: true
+        includeRootFolder: false
         archiveType: 'tar'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
         replaceExistingArchive: true
