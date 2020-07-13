@@ -37,13 +37,13 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/dotnet/aspnetcore/container/Application/aspnet-core-dotnet-core/Dockerfile'
         tags: '$(Build.BuildId)'
+    
 
-
-- stage: archive_file
-  displayName: Archive File
+- stage: publish_to_s3
+  displayName: Publish artifact to AWS S3
   jobs:  
-  - job: Archive_Build
-    displayName: Archive Build
+  - job: publish_to_aws_s3
+    displayName: Publish artifact to AWS S3
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -54,15 +54,6 @@ stages:
         archiveType: 'tar'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
         replaceExistingArchive: true
-
-- stage: publish_to_s3
-  displayName: Publish artifact to AWS S3
-  jobs:  
-  - job: publish_to_aws_s3
-    displayName: Publish artifact to AWS S3
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
     - task: S3Upload@1
       displayName: Publish archive file to s3 bucket
       inputs:
@@ -82,6 +73,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)/html'
+        includeRootFolder: false
+        archiveType: 'tar'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar'
+        replaceExistingArchive: true
     - task: PublishBuildArtifacts@1
       displayName: Publish build artifact
       inputs:
