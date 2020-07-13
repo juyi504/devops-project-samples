@@ -30,8 +30,8 @@ stages:
         tags: '$(Build.BuildId)'
 
 
-- stage: archive_HTML_file
-  displayName: Build
+- stage: archive_file
+  displayName: Archive File
   jobs:  
   - job: Archive_Build
     displayName: Archive Build
@@ -58,7 +58,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy WebService
-  dependsOn: Build_Docker_Image_Push_to_Docker_Hub
+  dependsOn: archive_file
   condition: succeeded()
   jobs:
   - deployment: DeployWebService
