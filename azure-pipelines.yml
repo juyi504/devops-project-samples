@@ -29,7 +29,7 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/dotnet/aspnetcore/container/Application/aspnet-core-dotnet-core/Dockerfile'
         tags: '$(Build.BuildId)'
 
-stages:
+
 - stage: archive HTML file
   displayName: Build
   jobs:  
