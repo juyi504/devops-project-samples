@@ -92,7 +92,7 @@ stages:
     
 
 - stage: Deploy
-  displayName: Deploy WebService TO AWS
+  displayName: Deploy TO AWS
   dependsOn: publish_to_s3
   condition: succeeded()
   jobs:
